@@ -1,0 +1,58 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyd
+*.so
+*.egg-info/
+dist/
+build/
+pip-wheel-metadata/
+*.egg
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+.tox/
+.nox/
+.mypy_cache/
+.pyre/
+.ruff_cache/
+
+# Virtual env
+.venv/
+venv/
+ENV/
+env/
+
+# IDE - PyCharm
+.idea/
+*.iml
+
+# VS Code (если вдруг)
+.vscode/
+
+# Playwright artifacts
+playwright-report/
+test-results/
+blob-report/
+traces/
+videos/
+screenshots/
+artifacts/
+
+# Logs
+*.log
+
+# OS / Windows
+.DS_Store
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Secrets / local config
+.env
+.env.*
+*.pem
+*.key
