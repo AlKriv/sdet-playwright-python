@@ -1,11 +1,25 @@
 import os
 import pytest
 from playwright.sync_api import sync_playwright
+from pages.app import App
+from config.settings import *
+
+
+@pytest.fixture
+def app(page):
+    # High-level facade for tests
+    return App(page)
+
 
 @pytest.fixture
 def page(request):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=True)
+
+        browser_type = getattr(p, BROWSER, None)
+        if browser_type is None:
+            raise ValueError(f"Unsupported BROWSER='{BROWSER}'. Use: chromium, firefox, webkit")
+
+        browser = browser_type.launch(headless=HEADLESS)
 
         # Create isolated browser context for each test (cookies/localStorage separation)
         context = browser.new_context()

@@ -1,5 +1,8 @@
+import pytest
 
 
-def test_example_dot_com_title(page):
-    page.goto("https://example.com", wait_until="domcontentloaded")
-    assert "Example" in page.title()
+@pytest.mark.ui
+@pytest.mark.smoke
+def test_example_dot_com_title(app):
+    app.login.open()
+    assert "Example" in app.page.title()

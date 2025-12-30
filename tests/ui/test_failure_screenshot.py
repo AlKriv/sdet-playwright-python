@@ -1,4 +1,4 @@
 
-def test_should_take_screenshot_on_failure(page):
-    page.goto(BaseU, wait_until="domcontentloaded")
-    assert "THIS_WILL_FAIL" in page.title()
+def test_should_take_screenshot_on_failure(app):
+    app.login.open()
+    assert "THIS_WILL_FAIL" in app.page.title()
