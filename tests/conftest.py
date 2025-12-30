@@ -1,10 +1,45 @@
+import os
 import pytest
 from playwright.sync_api import sync_playwright
 
 @pytest.fixture
-def page():
+def page(request):
     with sync_playwright() as p:
         browser = p.chromium.launch(headless=True)
-        page = browser.new_page()
+
+        # Create isolated browser context for each test (cookies/localStorage separation)
+        context = browser.new_context()
+        page = context.new_page()
+
+        # Start tracing for every test, but save the trace only on failure
+        context.tracing.start(screenshots=True, snapshots=True, sources=True)
+
         yield page
+
+        # If the test failed, persist trace to artifacts; otherwise just stop tracing
+        rep_call = getattr(request.node, "rep_call", None)
+        if rep_call and rep_call.failed:
+            os.makedirs("artifacts", exist_ok=True)
+            context.tracing.stop(path=f"artifacts/{request.node.name}.zip")
+        else:
+            context.tracing.stop()
+
+        context.close()
         browser.close()
+
+
+@pytest.hookimpl(hookwrapper=True)
+def pytest_runtest_makereport(item, call):
+    outcome = yield
+    rep = outcome.get_result()
+
+    # Store the test result on the node so fixtures can check pass/fail status
+    if rep.when == "call":
+        item.rep_call = rep
+
+    # Take screenshot only on test failure (call phase)
+    if rep.when == "call" and rep.failed:
+        page = item.funcargs.get("page")
+        if page:
+            os.makedirs("artifacts", exist_ok=True)
+            page.screenshot(path=f"artifacts/{item.name}.png", full_page=True)
