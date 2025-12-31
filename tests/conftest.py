@@ -2,7 +2,7 @@ import os
 import pytest
 from playwright.sync_api import sync_playwright
 from pages.app import App
-from config.settings import BROWSER, HEADLESS
+from config.settings import BROWSER, HEADLESS, ACTION_TIMEOUT_MS, NAVIGATION_TIMEOUT_MS, VIEWPORT_WIDTH, VIEWPORT_HEIGHT
 
 
 @pytest.fixture
@@ -22,7 +22,13 @@ def page(request):
         browser = browser_type.launch(headless=HEADLESS)
 
         # Create isolated browser context for each test (cookies/localStorage separation)
-        context = browser.new_context()
+        # Create context with consistent defaults (viewport + timeouts)
+        context = browser.new_context(
+            viewport={"width": VIEWPORT_WIDTH, "height": VIEWPORT_HEIGHT},
+        )
+        # Apply default timeouts for stability
+        context.set_default_timeout(ACTION_TIMEOUT_MS)
+        context.set_default_navigation_timeout(NAVIGATION_TIMEOUT_MS)
         page = context.new_page()
 
         # Start tracing for every test, but save the trace only on failure
