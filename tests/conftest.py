@@ -2,7 +2,7 @@ import os
 import pytest
 from playwright.sync_api import sync_playwright
 from pages.app import App
-from config.settings import *
+from config.settings import BROWSER, HEADLESS
 
 
 @pytest.fixture
