@@ -2,7 +2,14 @@ import os
 import pytest
 from playwright.sync_api import sync_playwright
 from pages.app import App
-from config.settings import BROWSER, HEADLESS, ACTION_TIMEOUT_MS, NAVIGATION_TIMEOUT_MS, VIEWPORT_WIDTH, VIEWPORT_HEIGHT
+from config.settings import (
+    BROWSER,
+    HEADLESS,
+    ACTION_TIMEOUT_MS,
+    NAVIGATION_TIMEOUT_MS,
+    VIEWPORT_WIDTH,
+    VIEWPORT_HEIGHT
+)
 
 
 @pytest.fixture
