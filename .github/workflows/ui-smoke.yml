@@ -34,7 +34,7 @@ jobs:
           BROWSER: "chromium"
           BASE_URL: "https://example.com"
         run: |
-          pytest -m "ui and smoke"
+          pytest -m "ui and smoke" -n 2
 
       - name: Upload artifacts (screenshots/traces)
         if: failure()
