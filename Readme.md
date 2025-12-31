@@ -25,6 +25,10 @@ pytest
 # UI smoke only
 pytest -m "ui and smoke"
 
+## Parallel execution (xdist) Run tests in parallel using 2 workers:
+pytest -n 2
+
+
 # debug-only tests (excluded by default)
 pytest -m debug
 
@@ -47,3 +51,4 @@ pytest -m "ui and smoke"
 On UI test failures the framework saves:
 - `artifacts/<test_name>.png` (screenshot)
 - `artifacts/<test_name>.zip` (Playwright trace)
+
