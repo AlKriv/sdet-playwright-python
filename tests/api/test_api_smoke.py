@@ -3,6 +3,7 @@ import pytest
 
 from api.client import ApiClient
 
+
 @pytest.mark.api
 @pytest.mark.smoke
 def test_api_health_smoke():

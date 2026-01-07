@@ -1,10 +1,12 @@
 import pytest
 
+
 @pytest.mark.ui
 @pytest.mark.smoke
 def test_home_page_loads(app):
     app.login.open()
     assert app.home.is_loaded()
+
 
 @pytest.mark.ui
 @pytest.mark.smoke
