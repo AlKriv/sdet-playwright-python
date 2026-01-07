@@ -11,4 +11,4 @@ class HomePage:
 
     def title_contains(self, text: str) -> None:
         # Assertion helper for readable tests
-        expect(self.page).to_have_title(lambda t: text in t)
+        assert text in self.page.title(), f"Expected '{text}' to be in title: '{self.page.title()}'"
